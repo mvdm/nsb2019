@@ -1,7 +1,7 @@
 Vandermeerlab codebase license
 ==============================
 
-Copyright (c) 2012-2016, contributors
+Copyright (c) 2012-2018, contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -51,3 +51,4 @@ Contributors
 - Emily Irvine
 - Matthijs van der Meer
 - Youki Tanaka
+- NS&B students & TAs
