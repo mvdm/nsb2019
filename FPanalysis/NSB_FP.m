@@ -9,7 +9,7 @@
 %[paramFile,paramPath] = uigetfile('*.m');
 %run(fullfile(paramPath,paramFile));
 
-Woodshole_FPparams.m
+NSB_FPparams.m
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %LOAD DATA HERE
