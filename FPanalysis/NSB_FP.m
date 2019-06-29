@@ -33,7 +33,7 @@ switch choice
             ]; %identify column indices based on variable names
         
         data.raw.time = table2array(raw(:,tidx(1)))'; %populate data structure with vectors of signal
-        data.raw.demod = table2array(raw(:,tidx(2)))';
+        %data.raw.demod = table2array(raw(:,tidx(2)))';
         data.raw.FP = table2array(raw(:,tidx(3)))';
         data.raw.refSig = table2array(raw(:,tidx(4)))';
         data.raw.Fs = 1/mean(diff(data.raw.time)); %sampling freq determined based on time stamps 
