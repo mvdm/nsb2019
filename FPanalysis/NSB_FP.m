@@ -17,7 +17,6 @@ NSB_FPparams
 choice = menu('data format?','.csv','.mat');
 switch choice
     case 1 
-        cd('C:\Users\MBLUser\Desktop\NSB19_mouse_FP\DATAraw');
         [dataFile,dataPath] = uigetfile('*.csv');
         
         opts = detectImportOptions([dataFile],'NumHeaderLines',1); % number of header lines which are to be ignored
@@ -86,7 +85,8 @@ else
 end
 
 data.final.params = params.FP;
+save([dataFile,'.mat'],'data'); %save to local folder
 cd('Z:\NSB_2019\03_MouseStriatum\data\photometry\');
-save([dataFile,'.mat'],'data');
+save([dataFile,'.mat'],'data'); %save to NSB server
 
 clearvars -except data 
