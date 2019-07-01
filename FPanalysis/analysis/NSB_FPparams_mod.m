@@ -27,3 +27,7 @@ params.FP.filtOrder = 10; % Order of the filter
 %% Baseline Parameters
 params.FP.fitType = 'linear'; % Fit method or type for baseline either 'linear' or 'exp'
 params.FP.winPer = 0.05; % Percent of total signal length that will be used for baseline window
+
+%% Other Parameteres
+params.wheelStatus = 0;
+params.optoStatus = 0;
