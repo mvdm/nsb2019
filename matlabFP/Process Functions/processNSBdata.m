@@ -14,54 +14,8 @@ function [data] = processNSBdata(acqType, recInfo)
 tic
 switch acqType
     case 1 
-        data = struct; %initialize data structure
-        data.acqType = ['doric'];
-        
-        %cd('C:\Users\MBLUser\Desktop\NSB19_mouse\photometry\doric')
-        [dataFile,dataPath] = uigetfile('*.csv','Select .csv Data File','MultiSelect','On'); %load CSV file outputted by doric
-        cd(dataPath) %call data path where CSV file is located for reading in table 
-        nFiles = length(dataFile);
-        
-    for n = 1:nFiles
-        if iscell(dataFile)
-        csvName = dataFile{n};
-        else
-            csvName = dataFile;
-        end
-        
-        opts = detectImportOptions([csvName],'NumHeaderLines',1); % number of header lines which are to be ignored
-            opts.VariableNamesLine = 2; % row number which has variable names
-            opts.DataLine = 3; % row number from which the actual data starts
-        
-            raw = readtable([csvName],opts); %read in .csv file into table
-        
-        tidx = [find(string(raw.Properties.VariableNames) == "Time_s_"), ...
-            find(string(raw.Properties.VariableNames) == "AIn_1_Dem_AOut_1_"), ...
-            find(string(raw.Properties.VariableNames) == "AIn_1_Raw"), ...
-            find(string(raw.Properties.VariableNames) == "AIn_2")]; %identify column indices based on variable names
-               
-        temp = struct; %initialize variables
-            acqTime = table2array(raw(:,tidx(1))); %populate data structure with vectors of signal
-            temp.FP = table2array(raw(:,tidx(3)));
-            temp.refSig = table2array(raw(:,tidx(4)));
-            temp.Fs = round(1/mean(diff(acqTime))); %sampling freq determined based on time stamps 
-            temp.nFPchan = 1;
-            
-        if ismember('AIn_1_Dem_AOut_2_', raw.Properties.VariableNames) %doric demodulated signal
-            ctrIdx = find(string(raw.Properties.VariableNames) == "AIn_1_Dem_AOut_2_");
-            temp.control = table2array(raw(:,ctrIdx));
-            temp.control = demodstr2num(temp.control)';
-        end
-         
-        if ismember('DI_O_1', raw.Properties.VariableNames) %doric DI signal in digital input channel 1
-            dIdx = find(string(raw.Properties.VariableNames) == "DI_O_1");
-            temp.dig = table2array(raw(:,dIdx));
-        end    
-        
-        data.acq(n) = temp;
-        fprintf('file number %1.0f has been loaded \n', n) 
-    end
-        
+        [data, out] = pullDoric();
+
     case 2
         convertH5toFP_nsb %convert .h5 file into .mat file for analysis
         FPfiles = [FPfiles,'.mat'];
@@ -78,7 +32,7 @@ data.experiment = recInfo{4};
 fprintf('your data has been loaded into MATLAB - woohoo! \n')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%RUN ANALYSIS
+%% RUN ANALYSIS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %cd('Z:\NSB_2019\03_MouseStriatum\code\matlabFP\Parameter Files\');
