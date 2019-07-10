@@ -166,9 +166,16 @@ function data = sub_extractScans(data,h5Struct,h5file)
     channelScale=data.header.AIChannelScales;
     scalingCoeff=data.header.AIScalingCoefficients;
     sampleRate=data.header.AcquisitionSampleRate;
+      
     for n = 2:nSweeps
         rootVal = h5Struct.Groups(n).Name;
         rawData = h5read(h5file,strcat(rootVal,'/analogScans'));
+        try
+            digitalData = h5read(h5file, strcat(rootVal,'/digitalScans'));
+            data.sweeps(n-1).digData = digitalData;
+        catch
+            [];
+        end
         scaledData = scaleData_WS(rawData,channelScale,scalingCoeff);
         data.sweeps(n-1).acqData = scaledData;
         data.sweeps(n-1).time = (1:length(scaledData))'/sampleRate;

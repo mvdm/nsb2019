@@ -28,7 +28,7 @@ for ii = 2:length(signal)
     if (tempPulse(ii-1) == 0) && (tempPulse(ii) == 1)       %onset when successive value is above threshold
         pulseOnset(ii) = ii;
     elseif (tempPulse(ii-1) == 1) && (tempPulse(ii) == 0)   %offset when successive value is below threshold
-        pulseOffset(ii) = ii;
+        pulseOffset(ii-1) = ii;
     end
 end
 

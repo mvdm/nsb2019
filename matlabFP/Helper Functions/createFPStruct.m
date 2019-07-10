@@ -69,6 +69,9 @@ function [data] = createFPStruct(wsData,animalName,expDate)
         if (~iscell(data.acq(sweepNum).FPnames))
             data.acq(sweepNum).FPnames = {data.acq(sweepNum).FPnames};
         end
+        if (isfield(wsData.sweeps(sweepNum),'digData'))
+            data.acq(sweepNum).dig = double(wsData.sweeps(sweepNum).digData);
+        end
         data.acq(sweepNum).time = wsData.sweeps(sweepNum).time;
     end
 end
@@ -85,7 +88,7 @@ function [FPind,wheelInd,refSigInd,pulseInd,controlInd,trigInd] = parseTraceName
 %
 %
 %
-    FPind = []; wheelInd = []; refSigInd = []; pulseInd = []; controlInd = [];
+    FPind = []; wheelInd = []; refSigInd = []; pulseInd = []; controlInd = []; trigInd = [];
     for n = 1:length(traceNames)
         tmpName = traceNames{n};
         if (strncmp(tmpName,'ACh',3)==1)
