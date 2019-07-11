@@ -28,7 +28,6 @@ acqType = menu('data format?','Doric/.csv','Wavesurfer/.h5');
 % SAVE DATA STRUCTURE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 tic
-%cd('Z:\NSB_2019\03_MouseStriatum\data\photometry\');    %save to NSB server
 save([data.humanID,'_',data.mouseID,'_',data.recdate,'_',data.experiment,'_rawFP.mat'],'dataRaw'); 
 save([data.humanID,'_',data.mouseID,'_',data.recdate,'_',data.experiment,'_FP.mat'],'data'); 
 toc

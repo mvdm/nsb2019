@@ -1,11 +1,13 @@
 function [data, out] = pullDoric()
 %convert Doric .csv file into new data structures
 %
+% [data, out] = pullDoric()
+%
 % created By: Anya Krok, created On: July 2019
 %
 % OUTPUT:
 % 'data' - raw signals for processing with Tritsch lab analysis
-% 'out' - output signals from Doric including Doric demodulation
+% 'out' - output signals from Doric for SyncSandboxDoric2
 %
     data = struct; %initialize data structure
     data.acqType = ['doric'];
@@ -33,13 +35,13 @@ function [data, out] = pullDoric()
         M = csvread(csvName, 3, 0); % Time(s)	AIn-1 - Dem (AOut-1)    AIn-1 - Dem (AOut-2)	AIn-1 	AIn-2	DI/O-1
         
         out = struct;
-        out.time = M(:, tIdx);
+        out.tvec = M(:, tIdx);
         out.data(1,:) = M(:, fpIdx);
         out.data(2,:) = M(:, ctlIdx);
         out.label = {'fp','ctl'};
         
-        ttlData = M(:, ttlIdx);
-        [ttlOn, ttlOff] = getSigOnOff(ttlData, out.time, 0.5);
+        out.ttlData = M(:, ttlIdx);
+        [ttlOn, ttlOff] = getSigOnOff(out.ttlData, out.tvec, 0.5);
         out.ttlOn = ttlOn;
         out.ttlOff = ttlOff;
         
