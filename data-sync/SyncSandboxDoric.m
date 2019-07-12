@@ -31,9 +31,9 @@ xlabel('Neuralynx time');
 %% LOAD DORIC DATA %%%
 %%%%%%%%%%%%%%%%%%%%%%
 
-cd('C:\data\NSB2019\349A Photometry&Ephys\')
+%cd('C:\data\NSB2019\349A Photometry&Ephys\')
 
-fn = 'FV_349A_20190907_1.csv';
+fn = FindFile('*.csv');
 
 % find names of columns in csv file (correspond to variables)
 fh = fopen(fn);
@@ -42,7 +42,7 @@ fclose(fh);
 
 tvec_idx = strmatch('Time(s)', colnames);
 fp_idx = strmatch('AIn-1 - Dem (AOut-1)', colnames);
-ctl_idx = strmatch('AIn-1 - Dem (AOut-2)', colnames);
+ctl_idx = strmatch('AIn-2', colnames);
 ttl_idx = strmatch('DI/O-1', colnames);
 raw_idx = strmatch('AIn-1 - Raw', colnames);
 
@@ -54,8 +54,10 @@ M = M(:, 1:6);
 out = tsd;
 out.tvec = M(:, tvec_idx);
 out.data(1,:) = M(:, fp_idx);
-out.data(2,:) = M(:, ctl_idx);
-out.label = {'fp', 'ctl'};
+out.data(2,:) = M(:, raw_idx);
+out.data(3,:) = M(:, ctl_idx);
+%out.label = {'fp', 'ctl'};
+out.label = {'fp', 'raw', 'ctl'};
 
 %% detect "pulse on" times in Doric data
 ttl_data = M(:, ttl_idx);
