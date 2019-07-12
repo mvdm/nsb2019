@@ -1,4 +1,5 @@
 %% plot NLX and WS data
+% this works on session M19-347A-190709_syncRecording_restInBoxGoodSWR
 
 % run SyncSandbox to get WSdata variable, then do
 WSdata.tvec = WSdata.tvec + meanShift;
