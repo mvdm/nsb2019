@@ -31,11 +31,13 @@ xlabel('Neuralynx time');
 %% LOAD WS DATA %%%%%%
 %%%%%%%%%%%%%%%%%%%%%%
 
-rawData = extractH5_WS('JG_test.h5');
+rawData = extractH5_WS('M19-347A-190709_DA.h5');
 WSdata = tsd;
-WSdata.tvec = rawData.sweeps.time;
-WSdata.data = rawData.sweeps.acqData';
-WSdata.label = rawData.sweeps.traceNames;
+WSdata.tvec = rawData.sweeps(1).time;
+WSdata.data(1,:) = rawData.sweeps(1).acqData;
+WSdata.label{1} = 'DA';
+WSdata.data(2,:) = rawData.sweeps(1).digData;
+WSdata.label{2} = 'TTL';
 
 %%
 subplot(212);
@@ -45,7 +47,7 @@ xlabel('Photometry time');
 %legend(h, WSdata.label); legend boxoff;
 
 %% detect pulse on times in WS data
-thr = 2;
+thr = 0.5;
 WSdiff = cat(2, 0, diff(getd(WSdata, 'TTL')));
 up_idx = find(WSdiff > thr);
 
@@ -97,7 +99,7 @@ wpd_aligned = circshift(wpd, [alignShift 0]);
 wpt_aligned = circshift(wpt, [alignShift 0]);
 
 % compute the mean shift across pulses
-meanShift = nanmean(npt - wpt_aligned); % this is the magic number
+meanShift = nanmedian(npt(~isnan(wpt_aligned)) - wpt_aligned(~isnan(wpt_aligned))); % this is the magic number
 wpt_corrected = wpt + meanShift;
 wpt_diffs = npt - wpt_corrected;
 
