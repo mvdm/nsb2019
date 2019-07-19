@@ -1,7 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LOAD NEURALYNX DATA %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-cd('Z:\NSB_2019\03_MouseStriatum\data\SyncTests\firstSyncPulseTest\JG_test');
+%cd('Z:\NSB_2019\03_MouseStriatum\data\SyncTests\firstSyncPulseTest\JG_test');
+cd('C:\data\NSB2019\M19-347A-190709_syncRecording_restInBoxGoodSWR');
 
 %% load event timestamps (TTL on and off times)
 please = [];
