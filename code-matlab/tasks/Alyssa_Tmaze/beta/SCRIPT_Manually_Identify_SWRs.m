@@ -170,7 +170,7 @@ please = []; please.weightby = 'amplitude'; % return envelope
 envelope = OldWizard(please,CSC);
 
 % Threshold to produce intervals
-please = []; please.method = 'zscore'; please.threshold = 1;
+please = []; please.method = 'zscore'; please.threshold = 2;
 envelopeIV = TSDtoIV2(please,envelope);
 
 % Remove events that are too short
